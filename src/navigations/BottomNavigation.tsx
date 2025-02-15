@@ -110,21 +110,15 @@ export default BottomNavigation;
 
 const styles = StyleSheet.create({
   tabStyle: {
-    height: Platform.OS === 'ios' ? wp(80) : wp(70),
-    // width: wp('100%'),
+    height: wp(70),
     backgroundColor: COLORS.white,
-    // backgroundColor: COLORS.dark,
-    paddingTop: Platform.OS === 'ios' ? wp(15) : wp(10),
-    paddingHorizontal: Platform.OS === 'ios' ? wp(10) : 0,
-    // position: 'absolute',
-    // bottom: wp(25),
-    // marginHorizontal: wp(20),
-    // borderRadius: wp(10),
+    paddingTop: wp(10),
+    paddingHorizontal: 0,
   },
   tabItemWrap: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: wp('100%') / 4,
+    width: wp('100%') / 2,
   },
   labelStyle: {
     ...FONTS.regular,
