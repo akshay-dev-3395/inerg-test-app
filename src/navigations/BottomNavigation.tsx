@@ -9,13 +9,11 @@ import {
 import React, {useCallback} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '@app/screens/Dashboard/Dashboard';
-import IconComponent from '@app/components/IconComponent/IconComponent';
 import {COLORS, FONTS} from '@app/constants/theme';
-import Members from '@app/screens/Members/Members';
-import Transactions from '@app/screens/Transactions/Transactions';
-import Reports from '@app/screens/Reports/Reports';
 import {normalizeFontSize, wp} from '@app/constants/common';
 import {useFocusEffect} from '@react-navigation/native';
+import IconComponent from '@app/components/IconComponent/IconComponent';
+import ReportScreen from '@app/screens/ReportScreen/ReportScreen';
 
 type TabItemsProps = {
   name: string;
@@ -37,10 +35,12 @@ const TabItems = (props: TabItemsProps) => {
         return true;
       };
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
 
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return () => backHandler.remove();
     }, []),
   );
 
@@ -87,37 +87,10 @@ const BottomNavigation = () => {
           ),
         }}
       />
+
       <Tab.Screen
-        name={'Members'}
-        component={Members}
-        options={{
-          tabBarIcon: ({focused, color}) => (
-            <TabItems
-              focused={focused}
-              icon="people"
-              color={color}
-              name="Members"
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={'Transactions'}
-        component={Transactions}
-        options={{
-          tabBarIcon: ({focused, color}) => (
-            <TabItems
-              focused={focused}
-              icon="work-history"
-              color={color}
-              name="Transactions"
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={'Reports'}
-        component={Reports}
+        name={'ReportScreen'}
+        component={ReportScreen}
         options={{
           tabBarIcon: ({focused, color}) => (
             <TabItems
