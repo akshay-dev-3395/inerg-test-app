@@ -1,14 +1,17 @@
 import {
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {memo, useState} from 'react';
 import {COLORS, FONTS} from '@app/constants/theme';
 import {normalizeFontSize, wp} from '@app/constants/common';
 import IconComponent from '@app/components/IconComponent/IconComponent';
+import {useAppDispatch, useAppSelector} from '@app/store/service/appStoreHook';
+import {setUpdateState} from '@app/store/slice/appSlice';
 
 type Props = {
   setIsClickFilter: (state: boolean) => void;
@@ -16,12 +19,48 @@ type Props = {
 
 const FilterModalView = (props: Props) => {
   const {setIsClickFilter} = props;
+  const dispatch = useAppDispatch();
+  const {allStateData} = useAppSelector(state => state.appReducer);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState(allStateData);
+
+  const handleSearch = (text: string) => {
+    setSearchQuery(text);
+    if (text === '') {
+      setFilteredData(allStateData); // Show full list when search is cleared
+    } else {
+      const filtered = allStateData.filter(item =>
+        item.state.toLowerCase().includes(text.toLowerCase()),
+      );
+      setFilteredData(filtered);
+    }
+  };
+
+  const onSelectList = (data: any) => {
+    dispatch(setUpdateState({name: data?.state}));
+    setIsClickFilter(false);
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput placeholder="search state" style={styles.inputStyle} />
-      <View style={styles.nameWrap}>
-        <Text style={styles.nameStyle}>State name</Text>
-      </View>
+      <TextInput
+        placeholder="search state"
+        style={styles.inputStyle}
+        value={searchQuery}
+        onChangeText={handleSearch}
+      />
+      <FlatList
+        data={filteredData}
+        keyExtractor={state => state.state}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item, index}) => (
+          <TouchableOpacity
+            style={styles.nameWrap}
+            onPress={() => onSelectList(item)}>
+            <Text style={styles.nameStyle}>{item?.state}</Text>
+          </TouchableOpacity>
+        )}
+      />
       <TouchableOpacity
         style={styles.closeWrap}
         onPress={() => setIsClickFilter(false)}>
@@ -36,7 +75,7 @@ const FilterModalView = (props: Props) => {
   );
 };
 
-export default FilterModalView;
+export default memo(FilterModalView);
 
 const styles = StyleSheet.create({
   container: {
@@ -53,6 +92,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray2,
     borderRadius: wp(8),
     paddingVertical: wp(8),
+    marginBottom: wp(10),
   },
   nameStyle: {
     ...FONTS.medium,

@@ -15,7 +15,7 @@ const CasesLineChart = (props: Props) => {
         data2={selectState?.line_chart?.deaths_list}
         data3={selectState?.line_chart?.recovered_list}
         data4={selectState?.line_chart?.total_list}
-        thickness={1}
+        thickness={2}
         height={wp('50%')}
         width={wp('80%')}
         yAxisTextStyle={{color: 'gray'}}

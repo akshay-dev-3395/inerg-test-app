@@ -81,7 +81,7 @@ export const appSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getCovidApi.pending, (state, action) => {});
     builder.addCase(getCovidApi.fulfilled, (state, action) => {
-      console.log('DATA=====', action.payload);
+      // console.log('DATA=====', action.payload);
       state.allStateData = action.payload?.data;
     });
     builder.addCase(getCovidApi.rejected, (state, action) => {

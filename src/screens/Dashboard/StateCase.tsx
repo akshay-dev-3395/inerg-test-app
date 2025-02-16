@@ -31,8 +31,12 @@ const StateCase = (props: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrap}>
-        <Text style={styles.stateName}>{selectState?.details?.state}</Text>
-        <TouchableOpacity onPress={() => setIsClickFilter(true)}>
+        <Text style={styles.stateName} numberOfLines={1}>
+          {selectState?.details?.state}
+        </Text>
+        <TouchableOpacity
+          onPress={() => setIsClickFilter(true)}
+          style={styles.iconWrap}>
           <IconComponent
             name={'filter-list'}
             packageName={'MaterialIcons'}
@@ -74,11 +78,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    // flex: 1,
+  },
+  iconWrap: {
+    width: wp(35),
+    height: wp(35),
   },
   stateName: {
     ...FONTS.bold,
     fontSize: normalizeFontSize(20),
     color: COLORS.primaryDark,
+    flex: 1,
   },
   rowStyle: {
     flexDirection: 'row',

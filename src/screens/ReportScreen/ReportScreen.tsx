@@ -16,11 +16,13 @@ const ReportScreen = () => {
         <PerformanceChart setIsClickFilter={setIsClickFilter} />
         <CasesLineChart />
       </View>
-      {/* {isClickFilter && (
-        <BottomModal isVisible={isClickFilter} setVisible={state => {}}>
+      {isClickFilter && (
+        <BottomModal
+          isVisible={isClickFilter}
+          setVisible={state => setIsClickFilter(state)}>
           <FilterModalView setIsClickFilter={setIsClickFilter} />
         </BottomModal>
-      )} */}
+      )}
     </ScreenWrapper>
   );
 };

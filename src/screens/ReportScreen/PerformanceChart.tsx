@@ -10,18 +10,6 @@ type Props = {
   setIsClickFilter: (state: boolean) => void;
 };
 
-// const pieData = [
-//   {
-//     value: 47.5,
-//     color: '#009FFF',
-//     gradientCenterColor: '#006DFF',
-//     focused: true,
-//   },
-//   {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-//   {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-//   {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
-// ];
-
 const PerformanceChart = (props: Props) => {
   const {setIsClickFilter} = props;
   const {selectState} = useAppSelector(state => state.appReducer);
@@ -49,6 +37,7 @@ const PerformanceChart = (props: Props) => {
         color: '#FFA5BA',
         gradientCenterColor: '#FF7F97',
       },
+      {value: 100},
     ];
 
     return data;

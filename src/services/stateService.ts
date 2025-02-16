@@ -41,7 +41,7 @@ const calculatePercentage = (stateName: string, covidData: any[]) => {
     deaths_per: Number(((sateData.deaths / deathsAll) * 100).toFixed(2)),
   };
 
-  console.log('DATA calculatePercentage===', percentage);
+  //   console.log('DATA calculatePercentage===', percentage);
   return {percentage, sateData};
 };
 
@@ -49,22 +49,22 @@ const makeLineChartData = () => {
   const total_list = MONTH.map(month => ({
     value: Math.floor(Math.random() * 100000) + 50000,
     label: month,
-    color: 'red',
+    color: '#8F80F3',
   }));
   const recovered_list = MONTH.map(month => ({
     value: Math.floor(Math.random() * 100000) + 50000,
     label: month,
-    color: 'green',
+    color: '#006DFF',
   }));
   const active_list = MONTH.map(month => ({
     value: Math.floor(Math.random() * 100000) + 50000,
     label: month,
-    color: 'blue',
+    color: '#FF7F97',
   }));
   const deaths_list = MONTH.map(month => ({
     value: Math.floor(Math.random() * 100000) + 50000,
     label: month,
-    color: 'purple',
+    color: '#3BE9DE',
   }));
 
   const line_chart = {
@@ -73,7 +73,7 @@ const makeLineChartData = () => {
     active_list,
     deaths_list,
   };
-  console.log('LINE CHART====', line_chart);
+  //   console.log('LINE CHART====', line_chart);
   return line_chart;
 };
 
