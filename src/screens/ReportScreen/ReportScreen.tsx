@@ -1,17 +1,26 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import ScreenWrapper from '@app/components/Layouts/ScreenWrapper';
 import PerformanceChart from './PerformanceChart';
 import {styles} from './styles';
 import CasesLineChart from './CasesLineChart';
+import BottomModal from '@app/components/ModalComponent/BottomModal';
+import FilterModalView from '../Dashboard/FilterModalView';
 
 const ReportScreen = () => {
+  const [isClickFilter, setIsClickFilter] = useState(false);
+
   return (
     <ScreenWrapper translucent={true} statusBarStyle={'light-content'}>
       <View style={styles.container}>
-        <PerformanceChart />
+        <PerformanceChart setIsClickFilter={setIsClickFilter} />
         <CasesLineChart />
       </View>
+      {/* {isClickFilter && (
+        <BottomModal isVisible={isClickFilter} setVisible={state => {}}>
+          <FilterModalView setIsClickFilter={setIsClickFilter} />
+        </BottomModal>
+      )} */}
     </ScreenWrapper>
   );
 };

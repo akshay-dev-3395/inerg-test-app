@@ -10,16 +10,21 @@ import {COLORS, FONTS} from '@app/constants/theme';
 import {normalizeFontSize, wp} from '@app/constants/common';
 import IconComponent from '@app/components/IconComponent/IconComponent';
 
-type Props = {};
+type Props = {
+  setIsClickFilter: (state: boolean) => void;
+};
 
 const FilterModalView = (props: Props) => {
+  const {setIsClickFilter} = props;
   return (
     <View style={styles.container}>
       <TextInput placeholder="search state" style={styles.inputStyle} />
       <View style={styles.nameWrap}>
         <Text style={styles.nameStyle}>State name</Text>
       </View>
-      <TouchableOpacity style={styles.closeWrap}>
+      <TouchableOpacity
+        style={styles.closeWrap}
+        onPress={() => setIsClickFilter(false)}>
         <IconComponent
           name={'close-circle'}
           packageName={'MaterialCommunityIcons'}

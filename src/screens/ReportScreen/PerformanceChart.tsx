@@ -1,26 +1,58 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {normalizeFontSize, wp} from '@app/constants/common';
 import {COLORS, FONTS} from '@app/constants/theme';
 import {PieChart} from 'react-native-gifted-charts';
 import IconComponent from '@app/components/IconComponent/IconComponent';
+import {useAppSelector} from '@app/store/service/appStoreHook';
 
-type Props = {};
+type Props = {
+  setIsClickFilter: (state: boolean) => void;
+};
 
-const pieData = [
-  {
-    value: 47,
-    color: '#009FFF',
-    gradientCenterColor: '#006DFF',
-    focused: true,
-  },
-  {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-  {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-  {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
-];
+// const pieData = [
+//   {
+//     value: 47.5,
+//     color: '#009FFF',
+//     gradientCenterColor: '#006DFF',
+//     focused: true,
+//   },
+//   {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
+//   {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
+//   {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
+// ];
 
 const PerformanceChart = (props: Props) => {
-  const {} = props;
+  const {setIsClickFilter} = props;
+  const {selectState} = useAppSelector(state => state.appReducer);
+
+  const pieData: any = useMemo(() => {
+    const data = [
+      {
+        value: selectState?.pie_chart?.recovered_per,
+        color: '#009FFF',
+        gradientCenterColor: '#006DFF',
+        focused: true,
+      },
+      {
+        value: selectState?.pie_chart?.deaths_per,
+        color: '#93FCF8',
+        gradientCenterColor: '#3BE9DE',
+      },
+      {
+        value: selectState?.pie_chart?.total_per,
+        color: '#BDB2FA',
+        gradientCenterColor: '#8F80F3',
+      },
+      {
+        value: selectState?.pie_chart?.active_per,
+        color: '#FFA5BA',
+        gradientCenterColor: '#FF7F97',
+      },
+    ];
+
+    return data;
+  }, [selectState]);
 
   const renderDot = (color: string) => {
     return <View style={[styles.dotStyle, {backgroundColor: color}]} />;
@@ -32,21 +64,29 @@ const PerformanceChart = (props: Props) => {
         <View style={styles.legendWrap}>
           <View style={styles.labelWrap}>
             {renderDot('#006DFF')}
-            <Text style={styles.labelStyle}>Recovered: 47%</Text>
+            <Text style={styles.labelStyle}>
+              Recovered: {selectState?.pie_chart?.recovered_per}%
+            </Text>
           </View>
           <View style={styles.labelWrap}>
             {renderDot('#8F80F3')}
-            <Text style={styles.labelStyle}>Total Cases: 16%</Text>
+            <Text style={styles.labelStyle}>
+              Total Cases: {selectState?.pie_chart?.total_per}%
+            </Text>
           </View>
         </View>
         <View style={styles.legendWrap}>
           <View style={styles.labelWrap}>
             {renderDot('#3BE9DE')}
-            <Text style={styles.labelStyle}>Death: 40%</Text>
+            <Text style={styles.labelStyle}>
+              Death: {selectState?.pie_chart?.deaths_per}%
+            </Text>
           </View>
           <View style={[styles.labelWrap]}>
             {renderDot('#FF7F97')}
-            <Text style={styles.labelStyle}>Active Cases: 3%</Text>
+            <Text style={styles.labelStyle}>
+              Active Cases: {selectState?.pie_chart?.active_per}%
+            </Text>
           </View>
         </View>
       </>
@@ -57,8 +97,8 @@ const PerformanceChart = (props: Props) => {
     <View>
       <View style={styles.chartWrap}>
         <View style={styles.headerWrap}>
-          <Text style={styles.stateName}>Kerala</Text>
-          <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.stateName}>{selectState?.details?.state}</Text>
+          <TouchableOpacity onPress={() => setIsClickFilter(true)}>
             <IconComponent
               name={'filter-list'}
               packageName={'MaterialIcons'}
@@ -81,7 +121,9 @@ const PerformanceChart = (props: Props) => {
             centerLabelComponent={() => {
               return (
                 <View style={styles.centerLabelWrap}>
-                  <Text style={styles.centerLabelPer}>47%</Text>
+                  <Text style={styles.centerLabelPer}>
+                    {selectState?.pie_chart?.recovered_per}%
+                  </Text>
                   <Text style={styles.centerLabelName}>Recovered</Text>
                 </View>
               );

@@ -40,8 +40,10 @@ const Dashboard = () => {
         </ScrollView>
       </View>
       {isClickFilter && (
-        <BottomModal isVisible={isClickFilter} setVisible={state => {}}>
-          <FilterModalView />
+        <BottomModal
+          isVisible={isClickFilter}
+          setVisible={state => setIsClickFilter(state)}>
+          <FilterModalView setIsClickFilter={setIsClickFilter} />
         </BottomModal>
       )}
     </ScreenWrapper>

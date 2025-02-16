@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '@app/screens/Dashboard/Dashboard';
 import {COLORS, FONTS} from '@app/constants/theme';
@@ -35,12 +35,10 @@ const TabItems = (props: TabItemsProps) => {
         return true;
       };
 
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-      return () => backHandler.remove();
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, []),
   );
 

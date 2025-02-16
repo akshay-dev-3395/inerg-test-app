@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackType} from './navigationType';
 import BottomNavigation from './BottomNavigation';
 import InitialScreen from '@app/screens/InitialScreen/InitialScreen';
+import MapScreen from '@app/screens/MapScreen/MapScreen';
 
 type Props = {
   firstScreen?: string;
@@ -20,6 +21,7 @@ const Navigation = (props: Props) => {
       <Stack.Group>
         <Stack.Screen name={'InitialScreen'} component={InitialScreen} />
         <Stack.Screen name={'BottomTabNav'} component={BottomNavigation} />
+        <Stack.Screen name={'MapScreen'} component={MapScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

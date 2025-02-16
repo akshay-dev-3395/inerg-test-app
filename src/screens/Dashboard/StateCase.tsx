@@ -1,8 +1,9 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import IconComponent from '@app/components/IconComponent/IconComponent';
 import {COLORS, FONTS} from '@app/constants/theme';
 import {normalizeFontSize, wp} from '@app/constants/common';
+import {useAppSelector} from '@app/store/service/appStoreHook';
 
 type Props = {
   isClickFilter: boolean;
@@ -11,7 +12,7 @@ type Props = {
 
 type CardProps = {
   title: string;
-  count: number;
+  count: number | undefined;
 };
 
 const CardSection = (props: CardProps) => {
@@ -26,10 +27,11 @@ const CardSection = (props: CardProps) => {
 
 const StateCase = (props: Props) => {
   const {isClickFilter, setIsClickFilter} = props;
+  const {selectState} = useAppSelector(state => state.appReducer);
   return (
     <View style={styles.container}>
       <View style={styles.headerWrap}>
-        <Text style={styles.stateName}>Kerala</Text>
+        <Text style={styles.stateName}>{selectState?.details?.state}</Text>
         <TouchableOpacity onPress={() => setIsClickFilter(true)}>
           <IconComponent
             name={'filter-list'}
@@ -40,18 +42,27 @@ const StateCase = (props: Props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.rowStyle}>
-        <CardSection title="Total Cases" count={10} />
-        <CardSection title="Active Cases" count={10} />
+        <CardSection
+          title="Total Cases"
+          count={selectState?.details?.totalCases}
+        />
+        <CardSection
+          title="Active Cases"
+          count={selectState?.details?.activeCases}
+        />
       </View>
       <View style={styles.rowStyle}>
-        <CardSection title="Recovered" count={10} />
-        <CardSection title="Death" count={10} />
+        <CardSection
+          title="Recovered"
+          count={selectState?.details?.recovered}
+        />
+        <CardSection title="Death" count={selectState?.details?.deaths} />
       </View>
     </View>
   );
 };
 
-export default StateCase;
+export default memo(StateCase);
 
 const styles = StyleSheet.create({
   container: {
